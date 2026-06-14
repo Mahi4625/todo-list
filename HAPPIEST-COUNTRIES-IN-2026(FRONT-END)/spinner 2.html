@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Micro Loader with Horizontal Flowing Dots</title>
+  <style>
+    /* Main Layout Card Container */
+    .loader-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 16px;
+      max-width: 240px;
+      margin: 40px auto;
+      gap: 12px; /* Balanced spacing for the micro components */
+    }
+
+    /* Face Container - 30px Scale */
+    .face-container {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+    }
+
+    /* Solid Dark Outer Ring Frame */
+    .dark-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid #1f2937; /* Clean, clear definition at micro scale */
+      box-sizing: border-box;
+    }
+
+    /* Pure CSS Minimalist Line Face (Center Anchor) */
+    .line-face {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 18px; /* Ultra-compact micro bounding box */
+      height: 18px;
+    }
+
+    /* Micro Scaled and Balanced Eyes */
+    .line-face::before, .line-face::after {
+      content: "";
+      position: absolute;
+      top: 4px; /* Perfectly aligned vertically for 30px scale */
+      width: 3px; /* Clean, distinct micro points */
+      height: 3px;
+      background-color: #1f2937;
+      border-radius: 50%;
+    }
+    .line-face::before { left: 2.5px; } /* Proportional micro horizontal layout */
+    .line-face::after { right: 2.5px; }
+
+    /* Minimalist Dynamic Mouth Container */
+    .mouth-wrapper {
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px; /* Micro clipping window */
+      height: 6px;
+      overflow: hidden;
+    }
+
+    /* The Mouth Line */
+    .mouth {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #1f2937; /* Consistent stroke balance */
+      border-radius: 50%;
+      box-sizing: border-box;
+      position: absolute;
+      
+      /* Smoothly morphs from neutral to a wide smile */
+      animation: smileGrow 3s ease-in-out infinite;
+    }
+
+    /* Flowing Loading Dots Container */
+    .dark-dots {
+      display: flex;
+      align-items: center;
+      gap: 4px; /* Space between the flowing dots */
+      height: 30px; /* Matches the face height for alignment */
+    }
+
+    /* Individual Flowing Dot Configuration */
+    .dark-dots span {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: #1f2937;
+      border-radius: 50%;
+      
+      /* Horizontal ripple flow animation */
+      animation: dotHorizontalFlow 1.4s ease-in-out infinite;
+    }
+
+    /* Staggered animation delays to create the horizontal forward ripple effect */
+    .dark-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .dark-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .dark-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    /* --- KEYFRAME ANIMATIONS --- */
+
+    /* Mouth Shape Expansion */
+    @keyframes smileGrow {
+      0%, 100% {
+        top: 2px; /* Flat neutral line position */
+        border-radius: 0%;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+      }
+      40%, 70% {
+        top: -6px; /* Pulls arc up optimally into micro bounding window */
+        border-radius: 50%;
+        border-top: 2px solid transparent; /* Shows lower crescent curve only */
+      }
+    }
+
+    /* Straight Horizontal Flowing Ripple Effect */
+    @keyframes dotHorizontalFlow {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.4;
+      }
+      35% {
+        transform: scale(1.5); /* Expands outward inline */
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loader-card">
+    
+    <div class="face-container">
+      <div class="dark-ring"></div>
+      <div class="line-face">
+        <div class="mouth-wrapper">
+          <div class="mouth"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dark-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>60px Left-Shifted Flag Face Loader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    /* --- ANIMATION ENGINES --- */
+
+    /* Endless horizontal scrolling motion for the global flag mosaic texture */
+    @keyframes scrollFlagsGrid {
+      0% { background-position: 0px center; }
+      100% { background-position: -300px center; }
+    }
+
+    /* YOUR EXACT MOUTH ANIMATION ENGINE: Scaled up for the 60px boundary box */
+    @keyframes smileGrow {
+      0%, 100% {
+        top: 4px; /* Flat neutral line position */
+        border-radius: 0%;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+      }
+      40%, 70% {
+        top: -14px; /* Pulls arc up optimally into micro bounding window */
+        border-radius: 50%;
+        border-top: 3px solid transparent; /* Shows lower crescent curve only */
+      }
+    }
+
+    /* --- SHAPE & LAYOUT REFINEMENTS --- */
+
+    /* Core flag texture background asset layer */
+    .global-flag-mesh {
+      background-image: url('https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=600&auto=format&fit=crop');
+      background-size: auto 100%;
+      background-repeat: repeat-x;
+      animation: scrollFlagsGrid 4s linear infinite;
+    }
+
+    /* Custom SVG Mask cutting out the 60px circular disc with left-shifted eyes */
+    .flag-face-mask {
+      clip-path: url(#flag-face-60px-left-shifted);
+    }
+
+    /* YOUR EXACT MOUTH GEOMETRY: Mask container shifted left to perfectly center under the new eye positions */
+    .mouth-wrapper {
+      position: absolute;
+      bottom: 8px;
+      left: 50%; /* Balanced horizontally with the left eye shift */
+      transform: translateX(-50%);
+      width: 28px;
+      height: 14px;
+      overflow: hidden;
+    }
+
+    /* YOUR EXACT MOUTH STRUT: Heavy 3px stroke to remain distinct at 60px scale */
+    .mouth {
+      width: 28px;
+      height: 28px;
+      border: 3px solid #1f2937;
+      border-radius: 50%;
+      box-sizing: border-box;
+      position: absolute;
+      animation: smileGrow 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center gap-4">
+    
+    <div class="relative w-[60px] h-[60px] flex-shrink-0 bg-slate-800 rounded-full overflow-hidden">
+      
+      <div class="absolute inset-0 global-flag-mesh flag-face-mask"></div>
+      
+      <div class="mouth-wrapper">
+        <div class="mouth"></div>
+      </div>
+      
+    </div>
+
+    <div class="flex gap-1.5 items-center h-[60px] text-slate-800 font-bold text-xl tracking-wider select-none transform translateY([-2px])">
+      <span>. . .</span>
+    </div>
+
+  </div>
+
+  <svg width="0" height="0" class="absolute">
+    <defs>
+      <clipPath id="flag-face-60px-left-shifted" clipPathUnits="objectBoundingBox">
+        <path d="
+          M 0.5,0 A 0.5,0.5 0 1,1 0.5,1 A 0.5,0.5 0 1,1 0.5,0 Z
+          M 0.26,0.38 A 0.055,0.055 0 1,0 0.26,0.379 Z
+          M 0.66,0.38 A 0.055,0.055 0 1,0 0.66,0.379 Z
+        " />
+      </clipPath>
+    </defs>
+  </svg>
+
+</body>
+</html>
